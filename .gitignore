@@ -1,0 +1,15 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code settings
+.vscode/
+
+# Chrome extension — don't commit the packed .crx file (it's auto-generated)
+*.crx
+*.pem
+
+# Editor swap files
+*.swp
+*.swo

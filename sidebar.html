@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptWrapper</title>
+  <link rel="stylesheet" href="sidebar.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════════════════════════════
+         PromptWrapper Sidebar
+         Loaded inside an <iframe> injected by content.js
+         ═══════════════════════════════════════ -->
+
+  <div class="sidebar-root">
+
+    <!-- ── Header ─────────────────────────────── -->
+    <header class="sidebar-header">
+      <div class="header-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">PromptWrapper</span>
+      </div>
+      <div class="header-right">
+        <span class="header-badge">v1.0</span>
+        <button id="close-btn" class="close-btn" aria-label="Close sidebar" title="Close sidebar">✕</button>
+      </div>
+    </header>
+
+    <!-- ── Main content ────────────────────────── -->
+    <main class="sidebar-body">
+
+      <!-- Step 1: Choose a preset ──────────────── -->
+      <section class="form-section">
+        <label class="section-label" for="preset-select">
+          <span class="step-badge">1</span>
+          Choose a preset
+        </label>
+
+        <div class="select-wrapper">
+          <select id="preset-select" aria-label="Choose a prompt preset">
+            <option value="" disabled selected>Loading presets…</option>
+          </select>
+          <span class="select-arrow">▾</span>
+        </div>
+
+        <!-- Shows the description of the selected preset -->
+        <p id="preset-description" class="preset-description" aria-live="polite"></p>
+      </section>
+
+      <!-- Step 2: Your content / question ─────── -->
+      <section class="form-section">
+        <label class="section-label" for="user-input">
+          <span class="step-badge">2</span>
+          Your content or question
+        </label>
+
+        <textarea id="user-input" placeholder="Paste your text, code, question, or anything you want to send…" rows="8"
+          aria-label="Your content or question"></textarea>
+
+        <div class="char-counter">
+          <span id="char-count">0</span> characters
+        </div>
+      </section>
+
+      <!-- Step 3: Preview (collapsible) ────────── -->
+      <section class="form-section preview-section">
+        <button class="collapsible-toggle" id="preview-toggle" aria-expanded="false" aria-controls="preview-box">
+          <span class="step-badge">3</span>
+          Preview full prompt
+          <span class="toggle-icon">▸</span>
+        </button>
+
+        <div id="preview-box" class="preview-box" hidden>
+          <pre id="preview-content" aria-label="Full prompt preview"></pre>
+        </div>
+      </section>
+
+      <!-- Run button ───────────────────────────── -->
+      <button id="run-btn" class="run-btn" aria-label="Run with preset prompt">
+        <span class="run-icon">▶</span>
+        Run with Preset
+      </button>
+
+      <!-- Status / feedback message ────────────── -->
+      <div id="status-msg" class="status-msg" aria-live="polite" hidden></div>
+
+    </main>
+
+    <!-- ── Footer ─────────────────────────────── -->
+    <footer class="sidebar-footer">
+      <a href="https://github.com/mk1/prompt-wrapper" target="_blank" rel="noopener noreferrer" class="footer-link">
+        ⭐ Star on GitHub
+      </a>
+      <span class="footer-divider">·</span>
+      <span class="footer-note">MIT License · No data sent</span>
+    </footer>
+
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+
+</html>

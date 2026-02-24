@@ -1,0 +1,45 @@
+{
+    "manifest_version": 3,
+    "name": "PromptWrapper",
+    "version": "1.0.0",
+    "description": "Inject pre-set professional prompts into ChatGPT and other LLM tools — fully client-side and privacy-first.",
+    "author": "Open-source contributors",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://chat.openai.com/*",
+                "https://chatgpt.com/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "sidebar.html",
+                "sidebar.css",
+                "sidebar.js",
+                "prompts.json",
+                "icons/icon16.png",
+                "icons/icon48.png",
+                "icons/icon128.png"
+            ],
+            "matches": [
+                "https://chat.openai.com/*",
+                "https://chatgpt.com/*"
+            ]
+        }
+    ]
+}
