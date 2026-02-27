@@ -10,8 +10,21 @@
 (function () {
   "use strict";
 
-  // ── 1. Guard: only inject once ──────────────────────────────
-  if (document.getElementById("prompt-wrapper-sidebar")) return;
+  // ── 1. Guard and setup message listener ─────────────────────
+  if (window.hasBeenInjected) return;
+  window.hasBeenInjected = true;
+
+  // Listen for messages from the background script (extension icon clicks)
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "toggle-sidebar") {
+      // If hidden or partially hidden, open it.
+      if (sidebar.style.opacity === "0" || !document.body.contains(sidebar)) {
+        openSidebar();
+      } else {
+        closeSidebar();
+      }
+    }
+  });
 
   // ── 2. Build the sidebar container ──────────────────────────
   // We use an <iframe> so sidebar CSS never conflicts with ChatGPT's styles.
@@ -31,16 +44,63 @@
     boxShadow: "-4px 0 24px rgba(0,0,0,0.18)",
     borderRadius: "0",
     background: "transparent",
+    transition: "transform 0.3s ease, opacity 0.3s ease",
   });
 
   document.body.appendChild(sidebar);
 
-  // ── 3. Nudge the ChatGPT page content to the left ───────────
-  // This prevents the sidebar from overlapping the chat area.
+  // ── 3. Create a floating toggle tab (initially hidden) ──────
+  const toggleTab = document.createElement("div");
+  toggleTab.id = "prompt-wrapper-toggle";
+  toggleTab.textContent = "⚡";
+  Object.assign(toggleTab.style, {
+    position: "fixed",
+    top: "50%",
+    right: "0",
+    width: "32px",
+    height: "40px",
+    background: "#7c6aff",
+    color: "#fff",
+    display: "none", // Hidden while sidebar is open
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "18px",
+    cursor: "pointer",
+    zIndex: "999999",
+    borderRadius: "8px 0 0 8px",
+    boxShadow: "-2px 0 8px rgba(0,0,0,0.2)",
+    transition: "transform 0.2s ease",
+  });
+
+  toggleTab.onmouseenter = () => toggleTab.style.transform = "translateX(-4px)";
+  toggleTab.onmouseleave = () => toggleTab.style.transform = "translateX(0)";
+  toggleTab.onclick = () => openSidebar();
+
+  document.body.appendChild(toggleTab);
+
+  // ── 4. Functions to toggle sidebar visibility ──────────────
+  function openSidebar() {
+    sidebar.style.transform = "translateX(0)";
+    sidebar.style.opacity = "1";
+    document.body.style.marginRight = "320px";
+    toggleTab.style.display = "none";
+  }
+
+  function closeSidebar() {
+    sidebar.style.transform = "translateX(100%)";
+    sidebar.style.opacity = "0";
+    document.body.style.marginRight = "0";
+    // Show the toggle tab after sidebar animation
+    setTimeout(() => {
+      toggleTab.style.display = "flex";
+    }, 300);
+  }
+
+  // Initial space allocation
   document.body.style.marginRight = "320px";
   document.body.style.transition = "margin-right 0.3s ease";
 
-  // ── 4. Listen for messages from sidebar.js ──────────────────
+  // ── 5. Listen for messages from sidebar.js ──────────────────
   window.addEventListener("message", (event) => {
     // Security: only accept messages originating from our extension
     if (event.source !== sidebar.contentWindow) return;
@@ -51,14 +111,7 @@
     }
 
     if (event.data.type === "close-sidebar") {
-      // Animate the sidebar out to the right, then hide it
-      sidebar.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-      sidebar.style.transform = "translateX(100%)";
-      sidebar.style.opacity = "0";
-      document.body.style.marginRight = "0";
-
-      // Remove from DOM after animation completes
-      setTimeout(() => sidebar.remove(), 320);
+      closeSidebar();
     }
   });
 

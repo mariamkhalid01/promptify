@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "PromptWrapper",
+    "name": "Promptify",
     "version": "1.0.0",
     "description": "Inject pre-set professional prompts into ChatGPT and other LLM tools — fully client-side and privacy-first.",
     "author": "Open-source contributors",
@@ -13,6 +13,10 @@
         "activeTab",
         "storage"
     ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {},
     "content_scripts": [
         {
             "matches": [

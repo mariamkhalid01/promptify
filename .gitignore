@@ -13,3 +13,25 @@
 # Editor swap files
 *.swp
 *.swo
+
+# Sensitive data
+.env
+.env.*
+secrets.json
+*.key
+*.pem
+*.pfx
+
+# Local environment
+node_modules/
+dist/
+build/
+.cache/
+.npm/
+
+# Development tools
+.idea/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
