@@ -1,5 +1,5 @@
 // =============================================================
-// sidebar.js — PromptWrapper Sidebar Logic
+// sidebar.js — Promptify Sidebar Logic
 // Runs inside sidebar.html (inside the <iframe>)
 // Responsibilities:
 //   1. Load prompts.json and populate the preset dropdown
@@ -45,7 +45,7 @@
             restoreLastPreset(); // after populating, restore saved state
         })
         .catch((err) => {
-            console.error("[PromptWrapper] Could not load prompts.json:", err);
+            console.error("[Promptify] Could not load prompts.json:", err);
             showStatus("⚠️ Could not load presets. Check prompts.json.", "error");
         });
 

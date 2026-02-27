@@ -1,5 +1,5 @@
 // =============================================================
-// content.js — PromptWrapper Content Script
+// content.js — Promptify Content Script
 // Injected by Chrome into chat.openai.com / chatgpt.com
 // Responsibilities:
 //   1. Create and attach a sidebar <iframe> to the page
@@ -29,7 +29,7 @@
   // ── 2. Build the sidebar container ──────────────────────────
   // We use an <iframe> so sidebar CSS never conflicts with ChatGPT's styles.
   const sidebar = document.createElement("iframe");
-  sidebar.id = "prompt-wrapper-sidebar";
+  sidebar.id = "promptify-sidebar";
   sidebar.src = chrome.runtime.getURL("sidebar.html");
 
   // Style the sidebar: fixed, right-aligned, full height
@@ -51,7 +51,7 @@
 
   // ── 3. Create a floating toggle tab (initially hidden) ──────
   const toggleTab = document.createElement("div");
-  toggleTab.id = "prompt-wrapper-toggle";
+  toggleTab.id = "promptify-toggle";
   toggleTab.textContent = "⚡";
   Object.assign(toggleTab.style, {
     position: "fixed",
@@ -135,7 +135,7 @@
 
     if (!inputEl) {
       alert(
-        "PromptWrapper: Could not find the ChatGPT input box.\n" +
+        "Promptify: Could not find the ChatGPT input box.\n" +
         "Please make sure a chat is open and try again."
       );
       return;
