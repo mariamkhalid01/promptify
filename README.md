@@ -34,7 +34,7 @@ Since this is an open-source project, you can load it directly into Chrome:
 ## 📦 Folder Structure
 
 ```text
-prompt-wrapper/
+promptify/
 ├── manifest.json       # Extension configuration (Manifest V3)
 ├── content.js          # Injected logic (sidebar creation & prompt injection)
 ├── background.js       # Handles extension icon click events
