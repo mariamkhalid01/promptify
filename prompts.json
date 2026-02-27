@@ -1,5 +1,5 @@
 {
-    "_comment": "PromptWrapper — preset prompt templates. Add, edit, or remove entries freely.",
+    "_comment": "Promptify — preset prompt templates. Add, edit, or remove entries freely.",
     "prompts": [
         {
             "id": "tutor",
